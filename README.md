@@ -26,7 +26,7 @@ To [add a dependency](https://getcomposer.org/doc/04-schema.md#package-links) to
 
 Run the following to use the latest stable version
 ```sh
-composer require deevee/text-similarity-php
+composer require deevee15/text-similarity-php
 ```
 
 ## Requirements

@@ -1,5 +1,5 @@
 {
-    "name": "deevee/text-similarity-php",
+    "name": "deevee15/text-similarity-php",
     "description": "php service for text similarity",
     "keywords": [
         "text",
@@ -16,7 +16,7 @@
     ],
     "type": "library",
     "license": "Apache-2.0",
-    "minimum-stability": "beta",
+    "minimum-stability": "stable",
     "homepage": "https://similarity.deevee.ru",
     "require": {
         "php": ">=8.1",
