@@ -1,0 +1,20 @@
+[
+    {
+        "titles": [
+            "NASA prepares new mission to study Jupiter’s icy moon Europa",
+            "Manchester City secures dramatic win to stay in title race"
+        ],
+        "firstText": "NASA is finalizing preparations for its upcoming Europa Clipper mission, which aims to explore Jupiter’s icy moon Europa. Scientists believe that beneath its frozen surface lies a vast subsurface ocean that could potentially support life. The spacecraft will carry advanced instruments to analyze the moon’s ice shell, surface composition, and possible water plumes. The mission is expected to launch within the next few years and could significantly expand our understanding of habitable environments beyond Earth.",
+        "secondText": "Manchester City earned a crucial victory in a tightly contested Premier League match, keeping their hopes alive in the title race. The team secured the win with a late goal after a balanced and intense game. With only a few matches remaining in the season, every point is critical, and this result puts additional pressure on their closest rivals. The coach praised the team’s resilience and focus during a decisive stage of the competition.",
+        "language": "en"
+    },
+    {
+        "titles": [
+            "Учёные обнаружили новый метод замедления старения клеток",
+            "Сборная России одержала победу в товарищеском футбольном матче"
+        ],
+        "firstText": "Исследователи из ведущего научного центра представили новый подход к замедлению процессов старения на клеточном уровне. В ходе экспериментов им удалось воздействовать на механизмы восстановления ДНК, что позволило значительно увеличить продолжительность жизни клеток в лабораторных условиях. По словам авторов работы, технология может стать основой для будущих методов продления жизни и лечения возрастных заболеваний, однако до практического применения потребуется ещё ряд исследований и клинических испытаний.",
+        "secondText": "Сборная России по футболу одержала уверенную победу в товарищеском матче против зарубежного соперника. Игра прошла в напряжённой борьбе, однако российская команда смогла реализовать несколько голевых моментов и удержать преимущество до финального свистка. Главный тренер отметил хорошую физическую форму игроков и слаженность команды, подчеркнув важность таких матчей для подготовки к будущим международным турнирам.",
+        "language": "ru"
+    }
+]

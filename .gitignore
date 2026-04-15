@@ -1,0 +1,7 @@
+/vendor/
+/words_cache/
+autoload.php
+composer.lock
+.DS_Store
+.idea/
+.vscode/

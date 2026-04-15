@@ -1,0 +1,38 @@
+{
+    "name": "deevee/text-similarity-php",
+    "description": "php service for text similarity",
+    "keywords": [
+        "text",
+        "similarity",
+        "comparison",
+        "phpcomparison",
+        "PHP"
+    ],
+    "authors": [
+        {
+            "name": "Danil Vikulov",
+            "email": "vikulovd15@gmail.com"
+        }
+    ],
+    "type": "library",
+    "license": "Apache-2.0",
+    "minimum-stability": "beta",
+    "homepage": "https://similarity.deevee.ru",
+    "require": {
+        "php": ">=8.1",
+        "cijic/phpmorphy": "^0.3.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPTextSimilarity\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPTextSimilarity\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    }
+}
