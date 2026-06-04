@@ -8,8 +8,9 @@
 
     class Adapter{
         private static $langPatterns = [
-            'ru' => '/[аА-яЯ]/',
-            'en' => '/[aA-zZ]/'
+            'ru' => '/[аА-яЯ]/u',
+            'en' => '/[aA-zZ]/u',
+            'de' => '/^[a-zA-ZäöüÄÖÜß]+$/u'
         ];
 
         public static function processText(string $text, string $lang){

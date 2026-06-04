@@ -27,7 +27,7 @@
         }
         public function testUnsupportedLanguageThrowsException(): void {
             $this->expectException(\Exception::class);
-            TextSimilarity::compare('de', 'Text', 'Text', ['first' => ['a'], 'second' => ['b']]);
+            TextSimilarity::compare('it', 'Text', 'Text', ['first' => ['a'], 'second' => ['b']]);
         }
         public function testEmptyTitles():void {
             $this->expectException(\Exception::class);

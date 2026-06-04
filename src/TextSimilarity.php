@@ -9,7 +9,7 @@
     use PHPTextSimilarity\Analyzer\EntityAnalyzer;
 
     class TextSimilarity{
-        private static $allowedLangs = ['en', 'ru'];
+        private static $allowedLangs = ['en', 'ru', 'de'];
         
         public static function compare(string $lang, string $firstText, string $secondText, array $titles){
             if(!in_array($lang, self::$allowedLangs)) throw new \Exception('Language not supported');
