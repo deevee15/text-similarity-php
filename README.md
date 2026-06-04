@@ -17,7 +17,7 @@ Read more about TextSimilarity:
 - Named entity extraction (names, locations, organizations, abbreviations)
 - Weighted scoring system with configurable coefficients
 - File-based word cache for performance
-- English and Russian language support
+- English, Deutsch and Russian language support
 
 ## Installation
 
