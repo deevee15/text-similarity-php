@@ -6,10 +6,12 @@
 
     use PHPTextSimilarity\Morphology\WordCache;
 
+    use PHPTextSimilarity\Config\LemmasConfig;
+
     class Adapter{
         private static $langPatterns = [
             'ru' => '/[аА-яЯ]/u',
-            'en' => '/[aA-zZ]/u',
+            'en' => '/^[A-Za-z]+$/',
             'de' => '/^[a-zA-ZäöüÄÖÜß]+$/u'
         ];
 
@@ -19,7 +21,7 @@
             //remove all dots from text's array
             $textNoDots = self::removeDots($textSplitted, $lang);
             //clear text array from short words with length less than 3 symbols and clear trashed words
-            $textNoShorts = self::clearShortWords($textNoDots);
+            $textNoShorts = self::clearShortWords($textNoDots, $lang);
             //remove total duplicates
             $textNoDuplicates = self::removeDuplicates($textNoShorts);
 
@@ -37,7 +39,7 @@
                 'wordsInfo' => $upperCaseText
             ];
             //process each word for collecting entities for scoring
-            $processedParadigms = self::processParadigms($morphyText);
+            $processedParadigms = self::processParadigms($morphyText, $lang);
             //count mentions for each word and remove same words with different paradigms
             $finalProcessedText = self::processCognate($processedParadigms);
 
@@ -49,7 +51,7 @@
             $processedTextArray = [];
             foreach($textSplitted as $num => $oneWord){
                 //if this word has dot
-                if(mb_strpos($oneWord, '.', 0, 'UTF-8')) {
+                if(mb_strpos($oneWord, '.', 0, 'UTF-8') !== false) {
                     $oneWordProcessed = explode('.', $oneWord);
                     foreach($oneWordProcessed as $singleWord){
                         preg_match(self::$langPatterns[$lang], $singleWord, $checkWord);
@@ -86,7 +88,7 @@
             return $processedTextArray;
         }
 
-        private static function clearShortWords(array $textSplitted){
+        private static function clearShortWords(array $textSplitted, string $lang){
             $convertedTextArray = [];
 
             $trashSymbols = ['<', '>', '/', '.', ',', ':', ';', '"', '-','(', ')', '\n'];
@@ -99,8 +101,10 @@
                 $wordRoot = trim($wordRoot);
                 $wordRoot = str_replace($trashSymbols, '', $wordRoot);
 
-                preg_match('/[A-Za-z,[1-9]/m', $wordRoot, $check_word);
-                if($check_word) continue;
+                if($lang === 'ru') {
+                    preg_match('/[A-Za-z,1-9[]/m', $wordRoot, $check_word);
+                    if($check_word) continue;
+                }
 
                 if($wordRoot === mb_convert_case(trim($wordRoot), MB_CASE_UPPER, 'UTF-8')){
                     if(mb_strlen($wordRoot, 'UTF-8') >= 2) {
@@ -162,7 +166,7 @@
             }
             return $noDuplicatesText;
         }
-        private static function processParadigms(array $morphyText){
+        private static function processParadigms(array $morphyText, string $lang){
             $processedParadigms = [];
 
             $wordsInfo = $morphyText['wordsInfo'];
@@ -191,40 +195,45 @@
                         $found_word_ary = $paradigm->getFoundWordForm();
                         foreach($found_word_ary as $found_form){$partOfSpeech = $found_form->getPartOfSpeech();}
                         
-                        if($paradigm->hasGrammems('НО')) {
-                            $morphiedWord['animated'] = 0;
+                        if($lang === 'ru'){
+                            $morphiedWord['animated'] = $paradigm->hasGrammems('НО') ? 0 : 1;
                         }
                         else{
-                            $morphiedWord['animated'] = 1;
+                            $morphiedWord['animated'] =
+                            (
+                                $paradigm->hasGrammems(LemmasConfig::LIST[$lang]['name']) ||
+                                $paradigm->hasGrammems(LemmasConfig::LIST[$lang]['organization']) ||
+                                $paradigm->hasGrammems(LemmasConfig::LIST[$lang]['location'])
+                            ) ? 1 : 0;
                         }
                         //set part of speech and word's root form
                         $morphiedWord['partofspeech'] = $partOfSpeech;
                         $morphiedWord['root'] = $paradigm->getBaseForm();
                         //skip word if its not noun
-                        if($partOfSpeech != 'С') continue;
+                        if($partOfSpeech != LemmasConfig::LIST[$lang]['noun']) continue;
                         //location
-                        if($paradigm->hasGrammems('ЛОК')) {
+                        if($paradigm->hasGrammems(LemmasConfig::LIST[$lang]['location'])) {
                             $morphiedWord['location'] = 1;
                         }
                         else{
                             $morphiedWord['location'] = 0;
                         }
 
-                        if($paradigm->hasGrammems('ОРГ')) {
+                        if($paradigm->hasGrammems(LemmasConfig::LIST[$lang]['organization'])) {
                             $morphiedWord['organization'] = 1;
                         }
                         else{
                             $morphiedWord['organization'] = 0;
                         }
 
-                        if($paradigm->hasGrammems('ИМЯ') or $paradigm->hasGrammems('ФАМ') or $paradigm->hasGrammems('ОТЧ')){
+                        if($paradigm->hasGrammems(LemmasConfig::LIST[$lang]['name']) or $paradigm->hasGrammems('ФАМ') or $paradigm->hasGrammems('ОТЧ')){
                             $morphiedWord['name'] = 1;
                         }
                         else{
                             $morphiedWord['name'] = 0;
                         }
 
-                        if($paradigm->hasGrammems('АББР')) {
+                        if($paradigm->hasGrammems(LemmasConfig::LIST[$lang]['abbreviation'])) {
                             $morphiedWord['abbreviation'] = 1;
                         }
                         else{
